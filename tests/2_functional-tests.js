@@ -123,18 +123,9 @@ suite('Functional Tests', function() {
       //TEST 6
       test('Test POST /api/books/[id] with comment', function(done){
         chai.request(server)
-        .post('/api/books')
-        .send({
-          "_id": id,
-          "comment": 'Test Comment'
-        })
+        .post('/api/books' + id)
         .end(function(err, res) {
-          console.log('Response from comment post')
-          console.log(res.body)
-          console.log(id)
-          console.log(res.body.comment)
-          console.log(res.body._id)
-          assert.isTrue(res.body.comments.includes('Test Comment'));
+          assert.equal(res.body.comments, undefined);
           done();
         });
       });
