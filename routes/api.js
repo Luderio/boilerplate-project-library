@@ -69,9 +69,9 @@ module.exports = function (app) {
     .delete(function(req, res){
       Books.deleteMany({}, (error, result) => {
         if (!error && result) {
-          res.send("complete delete successful");
+          res.json("complete delete successful");
         }else if (!result){
-          return res.send("unable to delete all the books")
+          return res.json("unable to delete all the books")
         }
       });
     });
@@ -88,7 +88,7 @@ module.exports = function (app) {
       if (!error && searchResult) {
         res.json({"_id": searchResult.id, "title": searchResult.title, "comments": searchResult.comment});
       }else if (!searchResult) {
-        return res.send("no book exists");
+        return res.json("no book exists");
       }
       
     });
@@ -99,7 +99,7 @@ module.exports = function (app) {
       let comment = req.body.comment;
 
       if (!comment) {
-        return res.send("missing required field comment");
+        return res.json("missing required field comment");
       }
 
       Books.findById({"_id": bookid}, (error, updatedComment) => {
@@ -112,11 +112,11 @@ module.exports = function (app) {
             if (!error && updatedRecord) {
               return res.json({"_id": updatedRecord.id, "title": updatedRecord.title, "comments": updatedRecord.comment, "commentcount": updatedRecord.commentcount});
             }else if (!updatedRecord) {
-              return res.send("no book exists");
+              return res.json("no book exists");
             }
           });
         }else if (!updatedComment) {
-          return res.send("no book exists");
+          return res.json("no book exists");
         }
       });
       
@@ -127,9 +127,9 @@ module.exports = function (app) {
       
       Books.findByIdAndRemove(bookid, (error, result) => {
         if (!error && result) {
-          return res.send("delete successful");
+          return res.json("delete successful");
         }else if (!result) {
-          return res.send("no book exists");
+          return res.json("no book exists");
         }
       });
     });
