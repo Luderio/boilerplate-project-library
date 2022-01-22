@@ -54,7 +54,7 @@ suite('Functional Tests', function() {
           assert.equal(res.body.title, 'Test Title');
           assert.isNotNull(res.body._id);
           id = res.body._id;
-          console.log('id 1 has been set as: ' + id);
+          console.log('id has been set as: ' + id);
           done();
         });
       });
@@ -132,6 +132,7 @@ suite('Functional Tests', function() {
           console.log('Response from comment post')
           console.log(res.body)
           console.log(id)
+          console.log(res.body.comment)
           assert.isTrue(res.body.comments.includes('Test Comment'));
           done();
         });
