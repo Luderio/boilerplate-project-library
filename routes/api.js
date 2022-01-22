@@ -66,11 +66,12 @@ module.exports = function (app) {
     
     .delete(function(req, res){
       Books.deleteMany({}, (error, result) => {
-        if (error) {
+        if (!error && result) {
+          res.send("complete delete successful");
+        }else if (!result){
           console.log(error);
           return res.send("unable to delete all the books")
         }
-        res.send("complete delete successful");
       });
     });
 
@@ -89,7 +90,6 @@ module.exports = function (app) {
       }
       res.json({"_id": searchResult.id, "title": searchResult.title, "comments": searchResult.comment});
     });
-
   })
     
     .post(function(req, res){
