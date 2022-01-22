@@ -65,7 +65,7 @@ module.exports = function (app) {
     })
     
     .delete(function(req, res){
-      Books.findByIdAndRemove({}, (error, result) => {
+      Books.remove({}, (error, result) => {
         if (error) {
           console.log(error);
           return res.send("unable to delete all the books")
