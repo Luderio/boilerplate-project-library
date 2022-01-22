@@ -13,7 +13,7 @@ module.exports = function (app) {
   const bookLibrarySchema = mongoose.Schema({
     "title": {"type": String, "required": true},
     "comment": {"type": Array, "required": true},
-    "commentcount": {"type": Number, "default": 0}
+    "commentcount": Number
   });
 
   //MODEL
@@ -100,13 +100,19 @@ module.exports = function (app) {
         return res.send("missing required field comment");
       }
 
-      let commentcounter = 0;
-
-      Books.findOneAndUpdate({"_id": bookid}, {"comment": comment, "commentcount": commentcounter++}, {new: true}, (error, updatedComment) => {
+      Books.findById({"_id": bookid}, (error, updatedComment) => {
         if (!error && updatedComment) {
-          return res.json({"_id": updatedComment.id, "title": updatedComment.title, "comments": updatedComment.comment, "commentcount": updatedComment.commentcount});
+          updatedComment.comment.push(comment);
+          updatedComment.commentcount = updatedComment.commentcount + 1;
+
+          updatedComment.save((error, updatedRecord) => {
+            if (!error && updatedRecord) {
+              res.json({"_id": updatedRecord.id, "title": updatedRecord.title, "comments": updatedRecord.comment, "commentcount": updatedRecord.commentcount});
+            }
+            console.log(error);
+          });
         }else if (!updatedComment) {
-          return res.send("no book exists");
+          res.send("no book exists");
         }
       });
       
