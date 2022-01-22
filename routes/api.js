@@ -68,18 +68,28 @@ module.exports = function (app) {
       Books.deleteMany({}, (error, result) => {
         if (error) {
           console.log(error);
-          return res.json("unable to delete all the books")
+          return res.send("unable to delete all the books")
         }
-        res.json("complete delete successful");
+        res.send("complete delete successful");
       });
     });
 
 
 
   app.route('/api/books/:id')
-    .get(function (req, res){
+  
+  //json res format: {"_id": bookid, "title": book_title, "comments": [comment,comment,...]}  
+  .get(function (req, res){
       let bookid = req.params.id;
-      //json res format: {"_id": bookid, "title": book_title, "comments": [comment,comment,...]}
+ 
+      Books.find({"_id": bookid}, (error, searchResult) => {
+        if (error) {
+          console.log(error);
+          return res.send("no book exists");
+        }
+        res.json({"_id": searchResult.id, "title": searchResult.book_title, "comments": searchResult.comments});
+      });
+
     })
     
     .post(function(req, res){
