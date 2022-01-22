@@ -86,7 +86,7 @@ module.exports = function (app) {
       if (!error && searchResult) {
         res.json({"_id": searchResult.id, "title": searchResult.title, "comments": searchResult.comment});
       }else if (!searchResult) {
-        return res.send("no books exists");
+        return res.send("no book exists");
       }
       
     });
@@ -100,7 +100,6 @@ module.exports = function (app) {
         return res.send("missing required field comment");
       }
 
-
       Books.findById({"_id": bookid}, (error, updatedComment) => {
         if (!error && updatedComment) {
 
@@ -111,10 +110,10 @@ module.exports = function (app) {
             if (!error && updatedRecord) {
               return res.json({"_id": updatedRecord.id, "title": updatedRecord.title, "comments": updatedRecord.comment, "commentcount": updatedRecord.commentcount});
             }else if (!updatedRecord) {
-              return console.log(error);
+              return res.send("no book exists");
             }
           });
-        }else if (!updatedComment && error) {
+        }else if (!updatedComment) {
           return res.send("no book exists");
         }
       });
@@ -127,7 +126,7 @@ module.exports = function (app) {
       Books.findByIdAndRemove({"_id": bookid}, (error, result) => {
         if (!error && result) {
           return res.send("delete successfull");
-        }else if (!result && error) {
+        }else if (!result) {
           res.send("no book exists")
         }
       });
