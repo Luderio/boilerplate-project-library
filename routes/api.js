@@ -101,9 +101,8 @@ module.exports = function (app) {
       }
 
       let commentcounter = 0;
-      commentcounter = commentcounter++;
 
-      Books.findOneAndUpdate({"_id": bookid}, {"comment": comment, "commentcount": commentcounter}, {new: true}, (error, updatedComment) => {
+      Books.findOneAndUpdate({"_id": bookid}, {"comment": comment, "commentcount": commentcounter++}, {new: true}, (error, updatedComment) => {
         if (!error && updatedComment) {
           return res.json({"_id": updatedComment.id, "title": updatedComment.title, "comments": updatedComment.comment, "commentcount": updatedComment.commentcount});
         }else if (!updatedComment) {
