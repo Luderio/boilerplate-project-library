@@ -80,17 +80,17 @@ module.exports = function (app) {
   
   //json res format: {"_id": bookid, "title": book_title, "comments": [comment,comment,...]}  
   .get(function (req, res){
-      let bookid = req.params.id;
- 
-      Books.find({"_id": bookid}, (error, searchResult) => {
-        if (error) {
-          console.log(error);
-          return res.send("no book exists");
-        }
-        res.json({"_id": searchResult.id, "title": searchResult.book_title, "comments": searchResult.comments});
-      });
+    let bookid = req.params.id;
 
-    })
+    Books.findById({"_id": bookid}, (error, searchResult) => {
+      if (error) {
+        console.log(error);
+        return res.send("no book exists");
+      }
+      res.json({"_id": searchResult.id, "title": searchResult.title, "comments": searchResult.comment});
+    });
+
+  })
     
     .post(function(req, res){
       let bookid = req.params.id;
