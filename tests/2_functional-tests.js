@@ -61,7 +61,6 @@ suite('Functional Tests', function() {
       test('Test POST /api/books with no title given', function(done) {
         chai.request(server)
         .post('/api/books')
-        .send({"title": null})
         .end(function(err, res) {
           assert.isString(res.body, 'response should be a String');
           assert.equal(res.body, 'missing required field title', 'the object must contain "missing required field title"');
