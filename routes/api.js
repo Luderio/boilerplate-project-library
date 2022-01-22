@@ -123,11 +123,11 @@ module.exports = function (app) {
     .delete(function(req, res){
       let bookid = req.params.id;
       
-      Books.findByIdAndRemove({"_id": bookid}, (error, result) => {
+      Books.findByIdAndRemove(bookid, (error, result) => {
         if (!error && result) {
-          return res.send("delete successfull");
+          return res.send("delete successful");
         }else if (!result) {
-          res.send("no book exists")
+          return res.send("no book exists");
         }
       });
     });
