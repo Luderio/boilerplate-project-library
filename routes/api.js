@@ -61,7 +61,6 @@ module.exports = function (app) {
       newBook.save((error, book) => {
         if (error) {
           console.log(error);
-          return res.send("missing required field title");
         }
         res.json({"_id": book.id, "title": book.title});
       });
