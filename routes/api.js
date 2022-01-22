@@ -96,26 +96,25 @@ module.exports = function (app) {
       let bookid = req.params.id;
       let comment = req.body.comment;
 
+      if (!comment) {
+        return res.send("missing required field comment");
+      }
+
 
       Books.findById({"_id": bookid}, (error, updatedComment) => {
-        if (!error && updatedComment) {
-          updatedComment.comment.push(comment);
-          updatedComment.commentcount = updatedComment.commentcount + 1;
-
-          updatedComment.save((error, updatedRecord) => {
-            if (!error && updatedRecord) {
-              return res.json({"_id": updatedRecord.id, "title": updatedRecord.title, "comments": updatedRecord.comment, "commentcount": updatedRecord.commentcount});
-            }else {
-              console.log(error);
-            }
-            
-          });
-        }else if (!comment) {
-          return res.send("missing required field comment");
-        }
-        else if (!updatedComment) {
+        if (error) {
+          console.log(error);
           return res.send("no book exists");
         }
+        updatedComment.comment.push(comment);
+        updatedComment.commentcount = updatedComment.commentcount + 1;
+
+        updatedComment.save((error, updatedRecord) => {
+          if (error) return console.log(error);
+          return res.json({"_id": updatedRecord.id, "title": updatedRecord.title, "comments": updatedRecord.comment, "commentcount": updatedRecord.commentcount});
+        });
+
+        
       });
       
     })
