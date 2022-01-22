@@ -12,7 +12,8 @@ module.exports = function (app) {
   //SCHEMA
   const bookLibrarySchema = mongoose.Schema({
     "title": {"type": String, "required": true},
-    "comment": {"type": Array, "required": true}
+    "comment": {"type": Array, "required": true},
+    "commentcount": {"type": Number, "default": 0}
   });
 
   //MODEL
@@ -20,17 +21,37 @@ module.exports = function (app) {
 
   //================================================================
 
+  let responseObject = {};
+
   app.route('/api/books')
     .get(function (req, res){
-      //response will be array of book objects
-      //json res format: [{"_id": bookid, "title": book_title, "commentcount": num_of_comments },...]
+      
+      Books.find({}, (error, result) => {
+        if (error) return console.log(error);
+
+        let bookRecords = result.map(book => {
+          let books = {
+            "_id": book.id,
+            "title": book.title,
+            "comments": book.comment,
+            "commentcount": book.commentcount
+          };
+          return books;
+        });
+
+        responseObject = bookRecords;
+
+        res.json(responseObject);
+      });
     })
     
     .post(function (req, res){
       let title = req.body.title;
       
       const newBook = new Books({
-        "title": title
+        "title": title,
+        "comment": [],
+        "commentcount": 0
       });
 
       newBook.save((error, book) => {
@@ -40,7 +61,7 @@ module.exports = function (app) {
         }
         res.json({"_id": book.id, "title": book.title});
       });
-      
+
     })
     
     .delete(function(req, res){
