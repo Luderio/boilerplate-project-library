@@ -1,14 +1,24 @@
-/*
-*
-*
-*       Complete the API routing below
-*       
-*       
-*/
-
 'use strict';
 
+const { response } = require("../server");
+const mongoose = require('mongoose');
+
 module.exports = function (app) {
+
+  //DATABASE SETUP
+  const mySecret = process.env['DB'];
+  mongoose.connect(mySecret);
+
+  //SCHEMA
+  const bookLibrarySchema = mongoose.Schema({
+    "title": {"type": String, "required": true},
+    "comment": {"type": Array, "required": true}
+  });
+
+  //MODEL
+  const Books = mongoose.model("Books", bookLibrarySchema);
+
+  //================================================================
 
   app.route('/api/books')
     .get(function (req, res){
@@ -18,7 +28,19 @@ module.exports = function (app) {
     
     .post(function (req, res){
       let title = req.body.title;
-      //response will contain new book object including atleast _id and title
+      
+      const newBook = new Books({
+        "title": title
+      });
+
+      newBook.save((error, book) => {
+        if (error) {
+          console.log(error);
+          return res.send("missing required field title");
+        }
+        res.json({"_id": book.id, "title": book.title});
+      });
+      
     })
     
     .delete(function(req, res){
