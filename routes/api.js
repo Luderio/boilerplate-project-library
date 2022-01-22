@@ -100,7 +100,10 @@ module.exports = function (app) {
         return res.send("missing required field comment");
       }
 
-      Books.findOneAndUpdate({"_id": bookid}, {"comment": comment, "commentcount": commentcount + 1}, {new: true}, (error, updatedComment) => {
+      let commentcounter = 0;
+      commentcounter = commentcounter + 1;
+
+      Books.findOneAndUpdate({"_id": bookid}, {"comment": comment, "commentcount": commentcounter}, {new: true}, (error, updatedComment) => {
         if (!error && updatedComment) {
           return res.json({"_id": updatedComment.id, "title": updatedComment.title, "comments": updatedComment.comment, "commentcount": updatedComment.commentcount});
         }else if (!updatedComment) {
