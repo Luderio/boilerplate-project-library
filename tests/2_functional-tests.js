@@ -124,6 +124,7 @@ suite('Functional Tests', function() {
       test('Test POST /api/books/[id] with comment', function(done){
         chai.request(server)
         .post('/api/books' + id)
+        .send({"_id": id, "comment": 'Test Comment'})
         .end(function(err, res) {
           assert.equal(res.body.comments, undefined);
           done();
