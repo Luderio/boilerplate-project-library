@@ -138,6 +138,7 @@ suite('Functional Tests', function() {
         .post('/api/books' + id)
         .send({})
         .end(function(err, res) {
+          assert.equal(res.status, 200);
           assert.equal(res.body, 'missing required field comment');
           done();
         });
@@ -148,6 +149,7 @@ suite('Functional Tests', function() {
         chai.request(server)
         .post('/api/books' + id)
         .end(function(err, res) {
+          assert.equal(res.status, 200);
           assert.equal(res.body, 'no book exists');
           done();
         });
@@ -166,7 +168,7 @@ suite('Functional Tests', function() {
           assert.equal(res.body, 'delete successful');
           done();
         });
-        
+
       });
 
       //TEST 10
