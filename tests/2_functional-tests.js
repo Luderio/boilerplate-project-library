@@ -125,9 +125,13 @@ suite('Functional Tests', function() {
         chai.request(server)
         .post('/api/books' + id)
         .send({
+          "_id": id,
           "comment": 'Test Comment'
         })
         .end(function(err, res) {
+          console.log('Response from comment post')
+          console.log(res.body)
+          console.log(id)
           assert.isTrue(res.body.comments.includes('Test Comment'));
           done();
         });
