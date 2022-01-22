@@ -101,7 +101,7 @@ module.exports = function (app) {
       }
 
       let commentcounter = 0;
-      commentcounter = commentcounter + 1;
+      commentcounter = commentcounter++;
 
       Books.findOneAndUpdate({"_id": bookid}, {"comment": comment, "commentcount": commentcounter}, {new: true}, (error, updatedComment) => {
         if (!error && updatedComment) {
