@@ -50,7 +50,7 @@ suite('Functional Tests', function() {
         .send({"title": 'Test Title'})
         .end(function(err, res) {
           assert.equal(res.status, 200);
-          assert.equal(res.body.title, 'Test title');
+          assert.equal(res.body.title, 'Test Title');
           assert.isNotNull(res.body._id);
           id1 = res.body._id;
           console.log('id 1 has been set as: ' + id1);
