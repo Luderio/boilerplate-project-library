@@ -65,12 +65,12 @@ module.exports = function (app) {
     })
     
     .delete(function(req, res){
-      Books.remove({}, (error, result) => {
+      Books.deleteMany({}, (error, result) => {
         if (error) {
           console.log(error);
-          return res.send("unable to delete all the books")
+          return res.json("unable to delete all the books")
         }
-        res.send("complete delete successful");
+        res.json("complete delete successful");
       });
     });
 
