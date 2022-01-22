@@ -63,7 +63,6 @@ suite('Functional Tests', function() {
         .post('/api/books')
         .send({"title": ''})
         .end(function(err, res) {
-          assert.isString(res.body, 'response should be a String');
           assert.equal(res.body, 'missing required field title', 'the object must contain "missing required field title"');
           done();
         });
