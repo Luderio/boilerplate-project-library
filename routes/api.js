@@ -114,7 +114,7 @@ module.exports = function (app) {
               return console.log(error);
             }
           });
-        }else if (!updatedComment) {
+        }else if (!updatedComment && error) {
           return res.send("no book exists");
         }
       });
@@ -127,7 +127,7 @@ module.exports = function (app) {
       Books.findByIdAndRemove({"_id": bookid}, (error, result) => {
         if (!error && result) {
           return res.send("delete successfull");
-        }else if (!result) {
+        }else if (!result && error) {
           res.send("no book exists")
         }
       });
