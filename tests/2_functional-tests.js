@@ -129,13 +129,6 @@ suite('Functional Tests', function() {
         })
         .end(function(err, res) {
           assert.isTrue(res.body.comments.includes('Test Comment'));
-
-          chai.request(server)
-          .delete("/api/books/" + id)
-          .send({})
-          .end(function(err, res) {
-            done();
-          })
           
         });
       });
