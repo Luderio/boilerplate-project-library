@@ -14,7 +14,7 @@ const res = require('express/lib/response');
 
 chai.use(chaiHttp);
 
-let id1 = '';
+let id = '';
 
 suite('Functional Tests', function() {
 
@@ -53,8 +53,8 @@ suite('Functional Tests', function() {
           assert.equal(res.status, 200);
           assert.equal(res.body.title, 'Test Title');
           assert.isNotNull(res.body._id);
-          id1 = res.body._id;
-          console.log('id 1 has been set as: ' + id1);
+          id = res.body._id;
+          console.log('id 1 has been set as: ' + id);
           done();
         });
       });
@@ -107,13 +107,11 @@ suite('Functional Tests', function() {
       //TEST 5
       test('Test GET /api/books/[id] with valid id in db',  function(done){
         chai.request(server)
-        .get('/api/books/_id')
-        .query({"_id": id1})
+        .get('/api/books/' + id)
         .end(function(err, res) {
-          assert.isObject(res.body);
-          assert.property(res.body, '_id');
-          assert.property(res.body, 'title');
-          assert.property(res.body, 'comments');
+          assert.equal(res.status, 200);
+          assert.equal(res.body._id, id);
+          assert.equal(res.body.title, 'Test Title');
           done();
         });
       });
