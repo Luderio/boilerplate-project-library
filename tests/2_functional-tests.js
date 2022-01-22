@@ -130,7 +130,7 @@ suite('Functional Tests', function() {
         })
         .end(function(err, res) {
           assert.equal(res.status, 200);
-          assert.equal(res.body.comments, '["Test Comment"]');
+          assert.equal(res.body.comment, '["Test Comment"]');
           done();
         });
       });
