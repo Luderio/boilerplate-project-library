@@ -78,7 +78,7 @@ module.exports = function (app) {
 
   app.route('/api/books/:id')
   
-  //json res format: {"_id": bookid, "title": book_title, "comments": [comment,comment,...]}  
+  //json res format: {"_id": bookid, "title": book_title, "comments": [comment,comment,...]} .. 
   .get(function (req, res){
     let bookid = req.params.id || res.send("no book exists");;
 
