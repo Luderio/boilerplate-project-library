@@ -104,17 +104,17 @@ module.exports = function (app) {
 
           updatedComment.save((error, updatedRecord) => {
             if (!error && updatedRecord) {
-              res.json({"_id": updatedRecord.id, "title": updatedRecord.title, "comments": updatedRecord.comment, "commentcount": updatedRecord.commentcount});
+              return res.json({"_id": updatedRecord.id, "title": updatedRecord.title, "comments": updatedRecord.comment, "commentcount": updatedRecord.commentcount});
             }else {
               console.log(error);
             }
             
           });
         }else if (!comment) {
-          res.send("missing required field comment");
+          return res.send("missing required field comment");
         }
         else if (!updatedComment) {
-          res.send("no book exists");
+          return res.send("no book exists");
         }
       });
       
@@ -122,7 +122,14 @@ module.exports = function (app) {
     
     .delete(function(req, res){
       let bookid = req.params.id;
-      //if successful response will be 'delete successful'
+      
+      Books.findByIdAndRemove({"_id": bookid}, (error, result) => {
+        if (!error && result) {
+          return res.send("delete successfull");
+        }else if (!result) {
+          res.send("no book exists")
+        }
+      });
     });
   
 };
