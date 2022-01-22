@@ -11,7 +11,7 @@ module.exports = function (app) {
 
   //SCHEMA
   const bookLibrarySchema = mongoose.Schema({
-    "title": {"type": String, "required": true},
+    "title": String,
     "comment": {"type": Array, "required": true},
     "commentcount": Number
   });
