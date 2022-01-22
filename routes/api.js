@@ -46,7 +46,11 @@ module.exports = function (app) {
     })
     
     .post(function (req, res){
-      let title = req.body.title || res.send("missing required field title");
+      let title = req.body.title;
+
+      if (!title) {
+        return res.send("missing required field title");
+      }
       
       const newBook = new Books({
         "title": title,
