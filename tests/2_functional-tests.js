@@ -133,6 +133,7 @@ suite('Functional Tests', function() {
           console.log(res.body)
           console.log(id)
           console.log(res.body.comment)
+          console.log(res.body._id)
           assert.isTrue(res.body.comments.includes('Test Comment'));
           done();
         });
