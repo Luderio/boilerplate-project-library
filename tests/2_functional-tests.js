@@ -124,21 +124,33 @@ suite('Functional Tests', function() {
       test('Test POST /api/books/[id] with comment', function(done){
         chai.request(server)
         .post('/api/books' + id)
-        .send({"_id": id, "comment": 'Test Comment'})
+        .send({"comment": 'Test Comment'})
         .end(function(err, res) {
-          assert.equal(res.body.comments, undefined);
+          assert.equal(res.status, 200);
+          assert.isTrue(res.body.comments.includes('Test Comment'));
           done();
         });
       });
 
       //TEST 7
       test('Test POST /api/books/[id] without comment field', function(done){
-        //done();
+        chai.request(server)
+        .post('/api/books' + id)
+        .send({})
+        .end(function(err, res) {
+          assert.equal(res.body, 'missing required field comment');
+          done();
+        });
       });
 
       //TEST 8
       test('Test POST /api/books/[id] with comment, id not in db', function(done){
-        //done();
+        chai.request(server)
+        .post('/api/books' + id)
+        .end(function(err, res) {
+          assert.equal(res.body, 'no book exists');
+          done();
+        });
       });
       
     });
@@ -147,12 +159,25 @@ suite('Functional Tests', function() {
 
       //TEST 9
       test('Test DELETE /api/books/[id] with valid id in db', function(done){
-        //done();
+        chai.request(server)
+        .delete('/api/books' + id)
+        .end(function(err, res) {
+          assert.equal(res.status, 200);
+          assert.equal(res.body, 'delete successful');
+          done();
+        });
+        
       });
 
       //TEST 10
-      test('Test DELETE /api/books/[id] with  id not in db', function(done){
-        //done();
+      test('Test DELETE /api/books/[id] with id not in db', function(done){
+        chai.request(server)
+        .delete('/api/books' + id)
+        .end(function(err, res) {
+          assert.equal(res.status, 200);
+          assert.equal(res.body, 'no book exists');
+          done();
+        });
       });
 
     });
