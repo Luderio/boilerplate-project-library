@@ -79,11 +79,11 @@ suite('Functional Tests', function() {
         .get('/api/books')
         .end(function(err, res) {
           assert.equal(res.status, 200);
-          assert.isArray(res.body, 'response should be an array');
-          assert.property(res.body[0], '_id', 'Books in array should contain commentcount');
-          assert.property(res.body[0], 'title', 'Books in array should contain title');
-          assert.property(res.body[0], 'comments', 'Books in array should contain _id');
-          assert.property(res.body[0], 'commentcount', 'Books in array should contain comments');
+          assert.isArray(res.body);
+          assert.property(res.body[0], '_id');
+          assert.property(res.body[0], 'title');
+          assert.property(res.body[0], 'comments');
+          assert.property(res.body[0], 'commentcount');
           done();
         });
       });
@@ -98,8 +98,8 @@ suite('Functional Tests', function() {
         .query({"_id": 'Invalid id'})
         .end(function(err, res) {
           assert.equal(res.status, 200);
-          assert.isString(res.body, 'response should be a String');
-          assert.equal(res.body, 'no book exists', 'response must contain "no book exists"');
+          assert.isString(res.body);
+          assert.equal(res.body, 'no book exists');
           done();
         });
       });
@@ -110,10 +110,10 @@ suite('Functional Tests', function() {
         .get('/api/books/_id')
         .query({"_id": id1})
         .end(function(err, res) {
-          assert.isObject(res.body, 'response should be an Object');
-          assert.property(res.body, '_id', 'property should be equal to "_id"');
-          assert.property(res.body, 'title', 'property should be equal to "title"');
-          assert.property(res.body, 'comments', 'property should be equal to "comments"');
+          assert.isObject(res.body);
+          assert.property(res.body, '_id');
+          assert.property(res.body, 'title');
+          assert.property(res.body, 'comments');
           done();
         });
       });
