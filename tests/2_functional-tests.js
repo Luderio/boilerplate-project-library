@@ -49,9 +49,9 @@ suite('Functional Tests', function() {
         .post('/api/books')
         .send({"title": 'Test Title'})
         .end(function(err, res) {
-          assert.isObject(res.body, 'response should be an object');
-          assert.property(res.body, '_id', 'the object property muts be equal to "_id"');
-          assert.property(res.body, 'title', 'the object property muts be equal to "title"');
+          assert.equal(res.status, 200);
+          assert.equal(res.body.title, 'Test title');
+          assert.isNotNull(res.body._id);
           id1 = res.body._id;
           console.log('id 1 has been set as: ' + id1);
           done();
