@@ -104,19 +104,22 @@ module.exports = function (app) {
 
 
       Books.findById({"_id": bookid}, (error, updatedComment) => {
-        if (error) {
+        if (!error && updatedComment) {
+
+          updatedComment.comment.push(comment);
+          updatedComment.commentcount = updatedComment.commentcount + 1;
+  
+          updatedComment.save((error, updatedRecord) => {
+            if (!error && updatedRecord) {
+              return res.json({"_id": updatedRecord.id, "title": updatedRecord.title, "comments": updatedRecord.comment, "commentcount": updatedRecord.commentcount});
+            }else if (!updatedRecord) {
+              return console.log(error);
+            }
+          });
+        }else if (!updatedComment) {
           console.log(error);
           return res.send("no book exists");
         }
-        updatedComment.comment.push(comment);
-        updatedComment.commentcount = updatedComment.commentcount + 1;
-
-        updatedComment.save((error, updatedRecord) => {
-          if (error) return console.log(error);
-          return res.json({"_id": updatedRecord.id, "title": updatedRecord.title, "comments": updatedRecord.comment, "commentcount": updatedRecord.commentcount});
-        });
-
-        
       });
       
     })
