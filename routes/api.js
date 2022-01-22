@@ -65,7 +65,13 @@ module.exports = function (app) {
     })
     
     .delete(function(req, res){
-      //if successful response will be 'complete delete successful'
+      Books.findByIdAndRemove({}, (error, result) => {
+        if (error) {
+          console.log(error);
+          return res.send("unable to delete all the books")
+        }
+        res.send("complete delete successful");
+      });
     });
 
 
