@@ -35,7 +35,7 @@ suite('Functional Tests', function() {
   * ----[END of EXAMPLE TEST]----
   */
 
-  suite('Routing tests', function() {
+  /*suite('Routing tests', function() {
 
 
     suite('POST /api/books with title => create book object/expect book object', function() {
@@ -103,4 +103,4 @@ suite('Functional Tests', function() {
 
   });
 
-});
+});*/
