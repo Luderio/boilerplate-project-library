@@ -122,7 +122,17 @@ suite('Functional Tests', function() {
       
       //TEST 6
       test('Test POST /api/books/[id] with comment', function(done){
-        
+        chai.request(server)
+        .post('/api/books' + id)
+        .send({
+          "_id": id,
+          "comment": 'Test Comment'
+        })
+        .end(function(err, res) {
+          assert.equal(res.status, 200);
+          assert.equal(res.body.comments, '["Test Comment"]');
+          done();
+        });
       });
 
       //TEST 7
