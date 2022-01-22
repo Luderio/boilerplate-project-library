@@ -69,7 +69,6 @@ module.exports = function (app) {
         if (!error && result) {
           res.send("complete delete successful");
         }else if (!result){
-          console.log(error);
           return res.send("unable to delete all the books")
         }
       });
@@ -87,7 +86,6 @@ module.exports = function (app) {
       if (!error && searchResult) {
         res.json({"_id": searchResult.id, "title": searchResult.title, "comments": searchResult.comment});
       }else if (!searchResult) {
-        console.log(error);
         return res.send("no books exists");
       }
       
@@ -117,7 +115,6 @@ module.exports = function (app) {
             }
           });
         }else if (!updatedComment) {
-          console.log(error);
           return res.send("no book exists");
         }
       });
