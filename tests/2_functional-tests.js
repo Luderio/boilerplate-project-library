@@ -123,11 +123,10 @@ suite('Functional Tests', function() {
       //TEST 6 - WORK ON THIS TOMORROW
       test('Test POST /api/books/[id] with comment', function(done){
         chai.request(server)
-        .post('/')
+        .post('/api/books' + id)
         .send({"_id": id, "comment": 'Test Comment'})
         .end(function(err, res) {
-          console.log(res.body)
-          assert.equal(res.body.comments, 'Test Comment');
+          assert.equal(res.body.comments, undefined);
           done();
         });
       });
