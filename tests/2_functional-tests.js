@@ -129,7 +129,7 @@ suite('Functional Tests', function() {
         })
         .end(function(err, res) {
           assert.isTrue(res.body.comments.includes('Test Comment'));
-          
+          done();
         });
       });
 
