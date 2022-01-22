@@ -123,7 +123,7 @@ suite('Functional Tests', function() {
       //TEST 6
       test('Test POST /api/books/[id] with comment', function(done){
         chai.request(server)
-        .post('/api/books' + id)
+        .get('/api/books' + id)
         .send({
           "_id": id,
           "comment": 'Test Comment'
